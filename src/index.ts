@@ -1,15 +1,18 @@
-import "reflect-metadata";
-import dotenv from "dotenv";
-import { AppDataSource } from "./database/data-source"; 
+import express from "express";
+import { AppDataSource } from "./data-source";
 
-dotenv.config();
+const app = express();
+
+app.use(express.json());
 
 AppDataSource.initialize()
-  .then(() => {
-    console.log("Conexión establecida.");
-    process.exit(0); 
-  })
-  .catch((err: Error) => {
-    console.error("Error al conectar a la base de datos:", err);
-    process.exit(1);
-  });
+    .then(() => {
+        console.log("Base de datos conectada");
+
+        app.listen(3000, () => {
+            console.log("Servidor ejecutándose en http://localhost:3000");
+        });
+    })
+    .catch((error) => {
+        console.error("Error al conectar con la base de datos:", error);
+    });
