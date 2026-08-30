@@ -1,8 +1,9 @@
 // estudiante
 
 
-import { Column, PrimaryGeneratedColumn, OneToOne, Entity, JoinColumn } from "typeorm";
+import { Column, PrimaryGeneratedColumn, OneToOne, Entity, JoinColumn, OneToMany } from "typeorm";
 import { User } from "./user.entity"
+import { Registration } from "./registration.entity"
 
 
 @Entity()
@@ -25,5 +26,8 @@ export class Student {
     @OneToOne(() => User, user => user.student)
     @JoinColumn()
     user!: User;
+
+    @OneToMany(() => Registration, (registration) => registration.student)
+    registration!: Registration[];
 
 }
